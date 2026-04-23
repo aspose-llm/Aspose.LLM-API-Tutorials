@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Aspose.LLM.Tutorials.BatchProcessing</RootNamespace>
+    <AssemblyName>BatchProcessing</AssemblyName>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.LLM" Version="$(AsposeLLMVersion)" />
+    <ProjectReference Include="..\..\_shared\Aspose.LLM.Tutorials.Common\Aspose.LLM.Tutorials.Common.csproj" />
+  </ItemGroup>
+
+</Project>

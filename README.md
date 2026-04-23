@@ -86,8 +86,21 @@ downloads. If you hit a 401/429, set `HF_TOKEN=<your token>`.
 | [`04-presets/BringYourOwnGGUF`](04-presets/BringYourOwnGGUF/)       | Build a preset from scratch and point it at any `.gguf` file on disk. |
 | [`04-presets/SystemPromptRecipes`](04-presets/SystemPromptRecipes/) | Same question, five different system prompts — side-by-side behaviour tasting. |
 
-More use cases (long context, deployment, tuning, DI) will be added as the
-pilot lands.
+### 05 — Tuning
+
+| Folder                                                  | What it shows                                                |
+| ------------------------------------------------------- | ------------------------------------------------------------ |
+| [`05-tuning/BatchProcessing`](05-tuning/BatchProcessing/) | Classify N inputs through one loaded model, fresh session per item, timing summary. |
+| [`05-tuning/LongContext`](05-tuning/LongContext/)       | Raise `ContextSize` to 16 k, ingest a 2 000-token doc once, ask several questions against it. |
+
+### 06 — Deployment
+
+| Folder                                                                      | What it shows                                                |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| [`06-deployment/AspNetCoreIntegration`](06-deployment/AspNetCoreIntegration/) | Minimal-API HTTP chat server using `AddLlamaServices` DI. Injects `Engine`, serialises with a `SemaphoreSlim`. |
+
+More use cases (offline deployment, CPU/GPU-specific tuning, low-memory) will
+follow as the pilot lands.
 
 ---
 

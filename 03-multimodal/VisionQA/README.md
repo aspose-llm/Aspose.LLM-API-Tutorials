@@ -35,7 +35,8 @@ dotnet run
 dotnet run -- /path/to/photo.jpg
 ```
 
-Example output with the bundled `assets/three-shapes.png`:
+Example output with the bundled `assets/three-shapes.png` (captured from a
+real run against Gemma 3 Vision Latex):
 
 ```
 ==========================
@@ -48,8 +49,9 @@ Model:     mradermacher/Gemma-3-Vision-Latex-GGUF/Gemma-3-Vision-Latex.Q4_K_M.gg
 Projector: mradermacher/Gemma-3-Vision-Latex-GGUF/Gemma-3-Vision-Latex.mmproj-f16.gguf
 Cache: /var/folders/.../aspose-llm-tutorials-models
 You > Describe this image in 2-3 sentences. Name the shapes and their colours, ...
-Bot < I see a red circle in the upper left, a blue triangle in the upper right, and a green
-      square at the bottom. Beneath them is the caption "three simple shapes".
+Bot < This image features three simple geometric shapes against a white
+      background. The shapes are a red circle, a blue triangle, and a green
+      rectangle. The text at the bottom reads "three simple shapes".
 ```
 
 ## Bundled sample
