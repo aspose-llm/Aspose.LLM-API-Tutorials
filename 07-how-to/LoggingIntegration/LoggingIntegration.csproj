@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Aspose.LLM.Tutorials.LoggingIntegration</RootNamespace>
+    <AssemblyName>LoggingIntegration</AssemblyName>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.LLM" Version="$(AsposeLLMVersion)" />
+    <!-- LoggerFactory + console provider so we can wire a real ILogger. -->
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
+    <ProjectReference Include="..\..\_shared\Aspose.LLM.Tutorials.Common\Aspose.LLM.Tutorials.Common.csproj" />
+  </ItemGroup>
+
+</Project>

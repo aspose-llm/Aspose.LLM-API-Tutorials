@@ -72,6 +72,7 @@ downloads. If you hit a 401/429, set `HF_TOKEN=<your token>`.
 | [`02-text-chat/MultiTurnChat`](02-text-chat/MultiTurnChat/)                           | The model remembers facts you gave it earlier in the session. |
 | [`02-text-chat/SessionPersistence`](02-text-chat/SessionPersistence/)                 | Save a session to disk, restart the process, reload, continue. |
 | [`02-text-chat/MultipleConcurrentSessions`](02-text-chat/MultipleConcurrentSessions/) | One API instance, three independent chat personalities in parallel. |
+| [`02-text-chat/LongRunningConversation`](02-text-chat/LongRunningConversation/) | What happens when the context window fills up — cache cleanup strategies compared. |
 
 ### 03 — Multimodal
 
@@ -92,15 +93,23 @@ downloads. If you hit a 401/429, set `HF_TOKEN=<your token>`.
 | ------------------------------------------------------- | ------------------------------------------------------------ |
 | [`05-tuning/BatchProcessing`](05-tuning/BatchProcessing/) | Classify N inputs through one loaded model, fresh session per item, timing summary. |
 | [`05-tuning/LongContext`](05-tuning/LongContext/)       | Raise `ContextSize` to 16 k, ingest a 2 000-token doc once, ask several questions against it. |
+| [`05-tuning/LowMemory`](05-tuning/LowMemory/)           | Back-to-back RSS comparison — smaller context + Q8 KV cache shrinks process footprint. |
 
 ### 06 — Deployment
 
 | Folder                                                                      | What it shows                                                |
 | --------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| [`06-deployment/AspNetCoreIntegration`](06-deployment/AspNetCoreIntegration/) | Minimal-API HTTP chat server using `AddLlamaServices` DI. Injects `Engine`, serialises with a `SemaphoreSlim`. |
+| [`06-deployment/AspNetCoreIntegration`](06-deployment/AspNetCoreIntegration/) | Minimal-API HTTP chat server with the facade registered as a DI singleton + a `SemaphoreSlim` gate. |
+| [`06-deployment/OfflineDeployment`](06-deployment/OfflineDeployment/) | Pre-populate the caches on a networked host, run the SDK air-gapped with explicit local paths. |
+| [`06-deployment/CpuOnly`](06-deployment/CpuOnly/) | CPU-only inference with a sweep over `NThreads` ∈ {1, 2, 4, ProcessorCount}. |
+| [`06-deployment/GpuCuda`](06-deployment/GpuCuda/) | Full-layer CUDA offload, `MainGpu`, multi-GPU `TensorSplit`, Flash Attention + KQV offload. |
 
-More use cases (offline deployment, CPU/GPU-specific tuning, low-memory) will
-follow as the pilot lands.
+### 07 — How-to
+
+| Folder                                                  | What it shows                                                |
+| ------------------------------------------------------- | ------------------------------------------------------------ |
+| [`07-how-to/HandleCancellation`](07-how-to/HandleCancellation/) | Four scenarios: timeout, user cancel, linked tokens, and the happy path. |
+| [`07-how-to/LoggingIntegration`](07-how-to/LoggingIntegration/) | Wire `Microsoft.Extensions.Logging.ILogger` — console, minimal file provider, ASP.NET / Serilog pointers. |
 
 ---
 
