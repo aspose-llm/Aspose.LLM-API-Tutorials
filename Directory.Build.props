@@ -1,0 +1,41 @@
+<Project>
+
+  <!--
+    Shared build settings for every tutorial project in this repo.
+    - Target .NET 8.0 (LTS). The Aspose.LLM SDK itself ships as netstandard2.0
+      and is fully usable from net8.0; net6.0 and net7.0 would also work but we
+      pick a single TFM to keep tutorials terse.
+    - C# latest so examples can use file-scoped namespaces, top-level statements,
+      and collection expressions without ceremony.
+    - ImplicitUsings brings in the common BCL namespaces; Program.cs stays short.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <!--
+    Pin the SDK version for the whole repo in one place. Override in an
+    individual project by setting <AsposeLLMVersion> before Import happens,
+    or by replacing the PackageReference outright.
+  -->
+  <PropertyGroup>
+    <AsposeLLMVersion Condition="'$(AsposeLLMVersion)' == ''">26.3.0</AsposeLLMVersion>
+  </PropertyGroup>
+
+  <!--
+    Aspose.LLM 26.3.0 hard-binds System.Text.Json 9.0.0.0 internally, but its
+    nuspec only declares >= 8.0.0. On net8.0 NuGet picks 8.x by default, which
+    then fails at runtime with FileNotFoundException. Force 9.0.x here so the
+    tutorials just work. Remove once the SDK's nuspec pins the correct minimum.
+  -->
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="9.0.0" />
+  </ItemGroup>
+
+</Project>

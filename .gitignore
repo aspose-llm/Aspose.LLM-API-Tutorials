@@ -1,0 +1,24 @@
+# .NET build output
+bin/
+obj/
+
+# Rider / Visual Studio
+.idea/
+.vs/
+*.user
+*.suo
+
+# Tutorial-local state
+# Model files and session snapshots must not land in the repo.
+models/
+sessions/
+*.gguf
+*.session
+
+# Licence file — users drop their own; never commit it.
+License.lic
+*.lic
+
+# OS cruft
+.DS_Store
+Thumbs.db

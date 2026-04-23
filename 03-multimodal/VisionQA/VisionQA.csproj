@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Aspose.LLM.Tutorials.VisionQA</RootNamespace>
+    <AssemblyName>VisionQA</AssemblyName>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.LLM" Version="$(AsposeLLMVersion)" />
+    <ProjectReference Include="..\..\_shared\Aspose.LLM.Tutorials.Common\Aspose.LLM.Tutorials.Common.csproj" />
+  </ItemGroup>
+
+  <!-- Ship the bundled sample PNG next to the built executable so the demo
+       works out of the box without a CLI argument. -->
+  <ItemGroup>
+    <None Update="assets\three-shapes.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

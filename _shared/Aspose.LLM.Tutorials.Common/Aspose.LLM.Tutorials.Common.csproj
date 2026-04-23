@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Aspose.LLM.Tutorials.Common</RootNamespace>
+    <AssemblyName>Aspose.LLM.Tutorials.Common</AssemblyName>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.LLM" Version="$(AsposeLLMVersion)" />
+  </ItemGroup>
+
+</Project>
