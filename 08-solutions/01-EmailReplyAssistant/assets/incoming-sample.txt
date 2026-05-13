@@ -1,0 +1,18 @@
+From: Margaret Chen <m.chen@northwind-logistics.com>
+Subject: Kick-off for the Q3 integration project — proposed 17 April
+
+Hi Alex,
+
+Hope you're well. Following up on our last call, I'd like to lock in a
+kick-off for the Q3 integration project. The team here is targeting
+Thursday, 17 April, 10:00–12:00 your time, with a follow-up working
+session the same afternoon if needed.
+
+Could you confirm whether your engineering leads are available that
+week? I've attached a draft agenda and the stakeholder list. Happy to
+flex the time slot, but the date itself is fairly fixed on our side
+because of an internal review the following Monday.
+
+Best regards,
+Margaret Chen
+Director of Partnerships, Northwind Logistics

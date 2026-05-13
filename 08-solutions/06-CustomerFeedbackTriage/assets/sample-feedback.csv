@@ -1,0 +1,21 @@
+id,source,text,timestamp
+1,app_store,"Keeps crashing on startup after the v3.2 update. I can't even open the app to log in anymore — happens on iPhone 14, iOS 17.4. Refunded would be nice.",2026-04-22T08:14:00Z
+2,survey,"Love the new dark mode! It's exactly what I've been waiting for, and the contrast is spot on.",2026-04-22T09:01:00Z
+3,email,"Hi team, can we get a Slack integration so order alerts post to our #ops channel? Would save us copy-pasting from the dashboard ten times a day.",2026-04-22T09:33:00Z
+4,app_store,"Got charged twice for the annual renewal — once on April 17 and again on April 19. Same card, same email. Please refund the duplicate.",2026-04-22T10:02:00Z
+5,social,"Just tried the export feature and lost two hours of work. The CSV came out empty and the original draft is gone. Furious.",2026-04-22T10:45:00Z
+6,survey,"Sign-up flow asked me for my company tax ID before I could even see the product. Felt like a wall, almost bounced.",2026-04-22T11:12:00Z
+7,email,"Found something concerning: I was able to view another customer's invoice by editing the URL parameter from /invoice/4421 to /invoice/4422. Please look into this.",2026-04-22T11:34:00Z
+8,app_store,"Five stars. Best calendar app I've used in a decade. Rock solid sync across three devices.",2026-04-22T12:01:00Z
+9,survey,"Yeah, super helpful. I've only spent four hours trying to figure out how to cancel my trial. Smooth experience.",2026-04-22T12:50:00Z
+10,email,"The keyboard input gets lost when I rotate from portrait to landscape on iPad — typed a whole reply, rotated, blank text field. Reproducible 100% of the time.",2026-04-22T13:18:00Z
+11,social,"Onboarding tour kept restarting every time I closed the app. Eventually figured out I had to tap a tiny X in the corner. Took me ten minutes.",2026-04-22T13:55:00Z
+12,survey,"Fine I guess. Does what it says.",2026-04-22T14:09:00Z
+13,email,"Can you add a way to bulk-tag customers? We import 2000 contacts a week and tagging one at a time is killing us.",2026-04-22T14:31:00Z
+14,app_store,"App is good but the push notifications come through twice every time. Already turned off duplicates in settings, no change.",2026-04-22T15:02:00Z
+15,survey,"Pricing page didn't make it clear that the ""Pro"" plan was billed annually. I clicked subscribe expecting $19, got charged $228. Want a refund.",2026-04-22T15:48:00Z
+16,email,"The new analytics dashboard is gorgeous. Whoever designed it deserves a raise.",2026-04-22T16:11:00Z
+17,social,"Anyone else seeing data loss on the iOS share extension? I shared three articles to the app and only one made it through. Opened a ticket but no response in 48 hours.",2026-04-22T17:00:00Z
+18,app_store,"Pretty good app. Battery drain is noticeable on my Pixel 7 — drops about 8% an hour with the app in foreground.",2026-04-22T17:36:00Z
+19,survey,"It would be nice to have a way to schedule recurring tasks. Currently I duplicate the task each week which is annoying but workable.",2026-04-22T18:04:00Z
+20,email,"Looking forward to the v4 release. Keep up the great work team. — Marina",2026-04-22T18:42:00Z

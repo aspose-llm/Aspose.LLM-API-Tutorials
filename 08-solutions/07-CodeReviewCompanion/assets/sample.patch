@@ -1,0 +1,95 @@
+diff --git a/src/Auth/LoginHandler.cs b/src/Auth/LoginHandler.cs
+index 4a1b2c3..7d9e0f1 100644
+--- a/src/Auth/LoginHandler.cs
++++ b/src/Auth/LoginHandler.cs
+@@ -85,11 +85,49 @@ namespace Acme.Auth
+             return Results.Unauthorized();
+         }
+
+-        public Task<IResult> Handle(string user, string pass)
++        public async Task<IResult> Handle(string user, string pass, string userAgent)
+         {
+-            // existing happy path
+-            return Task.FromResult(Results.Ok());
++            var record = await _users.LoadAsync(user);
++            if (record == null)
++            {
++                return Results.Unauthorized();
++            }
++
++            // Fire-and-forget audit write so we don't block the response.
++            _ = _auditLog.RecordLoginAttempt(record.Id, _http.RemoteIp);
++
++            // Stash the session cookie immediately after the audit kicks off.
++            _cookies.Append("sid", record.NewSessionId(), _cookieOpts);
++
++            if (record.PasswordHash == HashPassword(pass))
++            {
++                return Results.Ok(new { ok = true });
++            }
++
++            return Results.Unauthorized();
++        }
++
++        public IResult HandleLockout(string user)
++        {
++            try
++            {
++                var locked = _users.IncrementFailureCount(user);
++                if (locked.Failures >= 5)
++                {
++                    locked.LockedUntil = DateTime.UtcNow.AddMinutes(15);
++                    _users.Save(locked);
++                }
++                return Results.Ok();
++            }
++            catch
++            {
++                return Results.Ok();
++            }
++        }
++
++        private static string HashPassword(string pw)
++        {
++            return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(pw)));
+         }
+     }
+ }
+diff --git a/src/Data/UserRepository.cs b/src/Data/UserRepository.cs
+index 2b4c5d6..8e1f2a3 100644
+--- a/src/Data/UserRepository.cs
++++ b/src/Data/UserRepository.cs
+@@ -42,6 +42,18 @@ namespace Acme.Data
+             return await cmd.ExecuteScalarAsync() as string;
+         }
+
++        public async Task<UserRecord?> FindByEmailAsync(string email)
++        {
++            using var conn = _factory.Open();
++            var sql = "SELECT id, email, role FROM users WHERE email = '" + email + "'";
++            using var cmd = new SqlCommand(sql, conn);
++            using var r = await cmd.ExecuteReaderAsync();
++            if (!await r.ReadAsync())
++            {
++                return null;
++            }
++            return new UserRecord(r.GetInt64(0), r.GetString(1), r.GetString(2));
++        }
+     }
+ }
+diff --git a/src/Auth/Tests/LoginHandlerTests.cs b/src/Auth/Tests/LoginHandlerTests.cs
+index aa11bb2..cc33dd4 100644
+--- a/src/Auth/Tests/LoginHandlerTests.cs
++++ b/src/Auth/Tests/LoginHandlerTests.cs
+@@ -22,5 +22,11 @@ namespace Acme.Auth.Tests
+             var result = await sut.Handle("alice", "correct-horse");
+             Assert.IsType<Ok>(result);
+         }
++
++        [Fact]
++        public async Task Handle_UnknownUser_ReturnsUnauthorized()
++        {
++            // covered: missing user path. HandleLockout still untested.
++        }
+     }
+ }

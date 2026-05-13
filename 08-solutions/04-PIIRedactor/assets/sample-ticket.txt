@@ -1,0 +1,12 @@
+Ticket #A-4421 — Shipment escalation
+
+John Smith emailed us from john.smith@globex.com yesterday asking about
+order #A-4421. He is frustrated because the shipment to 142 Stuart Street,
+Boston, MA 02116 has not arrived on time. Please call him back at
++1 (617) 555-0142 or reply to his email. His customer ID is 884-221-3391.
+
+The card on file ending in 4242 was charged twice — see billing@globex.com
+for the refund flow.
+
+Internal note: assigning this ticket to Maria Petrova
+(m.petrova@ourcompany.com) for immediate handling.

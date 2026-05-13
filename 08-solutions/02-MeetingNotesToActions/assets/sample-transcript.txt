@@ -1,0 +1,55 @@
+Meeting: Halyard — Weekly Engineering Sync
+Date: 2026-04-01
+Attendees: Mira Tanaka (Engineering Lead), Amir Kovacs (Platform), Priya Sharma (Caching),
+           Sofia Martinelli (Infrastructure), Lena Christensen (SRE), Deepak Iyer (Platform)
+
+Mira Tanaka: Thanks for joining. Let's do status round-robin, then discuss the
+  FoundationDB hold-up. Amir, wire protocol spec — where are we?
+
+Amir Kovacs: Good progress. The read path is fully specified; I'm finishing
+  the write path now. I can have the full spec drafted by March 31st.
+
+Mira Tanaka: Perfect. Priya, cache-invalidation bus?
+
+Priya Sharma: On track. I'll have the prototype running against the integration
+  cluster by 15 May, and we're targeting production rollout by 1 July.
+
+Mira Tanaka: Good. Sofia, where are we on the FoundationDB provisioning?
+
+Sofia Martinelli: Slower than hoped. US-East negotiations are still open —
+  licensing came back nineteen percent above our November estimate. I expect
+  to close those talks by next week.
+
+Mira Tanaka: That's the critical path. Could you get me the updated pricing
+  memo by this Friday? I want to walk it through with Nadia before the budget
+  review.
+
+Sofia Martinelli: Yes, I'll have the pricing memo on your desk by Friday.
+
+Mira Tanaka: Great. Deepak, protocol review feedback?
+
+Deepak Iyer: I need two more days on the memory-layout chapter. I'll circulate
+  a full draft to the team by next Tuesday.
+
+Mira Tanaka: Lena, anything on observability?
+
+Lena Christensen: Yeah — I think we should start defining alert thresholds
+  before the migration window, not after. Otherwise we're flying blind.
+
+Mira Tanaka: Agreed in principle, but let's park it until the proxy binary is
+  closer to real. We'll revisit when Amir's work lands.
+
+Lena Christensen: OK.
+
+Mira Tanaka: Other items?
+
+Priya Sharma: One small thing — the NATS team wants to know by next Friday
+  whether we're committing to their managed tier or running our own brokers.
+  I don't think that's my decision to make.
+
+Mira Tanaka: It's mine. Let me think on it and I'll send a note by end of
+  the week. Anything else?
+
+(silence)
+
+Mira Tanaka: OK, let's wrap. Next sync Thursday, same time. Thanks everyone.

@@ -1,0 +1,161 @@
+diff --git a/src/Auth/IAccountLockoutStore.cs b/src/Auth/IAccountLockoutStore.cs
+new file mode 100644
+index 0000000..a1b2c3d
+--- /dev/null
++++ b/src/Auth/IAccountLockoutStore.cs
+@@ -0,0 +1,18 @@
++using System;
++using System.Threading;
++using System.Threading.Tasks;
++
++namespace Halyard.Auth;
++
++/// <summary>
++/// Persists per-account failed-login counters and lockout deadlines.
++/// Backed by Redis in production; an in-memory implementation is used in tests.
++/// </summary>
++public interface IAccountLockoutStore
++{
++    Task<int> IncrementFailureAsync(string accountId, TimeSpan window, CancellationToken ct);
++
++    Task<DateTimeOffset?> GetLockoutUntilAsync(string accountId, CancellationToken ct);
++
++    Task LockAsync(string accountId, TimeSpan duration, CancellationToken ct);
++
++    Task ResetAsync(string accountId, CancellationToken ct);
++}
+diff --git a/src/Auth/LoginHandler.cs b/src/Auth/LoginHandler.cs
+index 4d5e6f7..8a9b0c1 100644
+--- a/src/Auth/LoginHandler.cs
++++ b/src/Auth/LoginHandler.cs
+@@ -1,15 +1,28 @@
+ using System;
++using System.Threading;
+ using System.Threading.Tasks;
++using Halyard.Audit;
+
+ namespace Halyard.Auth;
+
+ public sealed class LoginHandler
+ {
++    private static readonly TimeSpan FailureWindow  = TimeSpan.FromMinutes(15);
++    private static readonly TimeSpan LockoutPeriod  = TimeSpan.FromMinutes(15);
++    private const int MaxFailedAttempts = 5;
++
+     private readonly IPasswordHasher _hasher;
+     private readonly IUserRepository _users;
++    private readonly IAccountLockoutStore _lockouts;
++    private readonly IAuditLog _audit;
+
+-    public LoginHandler(IPasswordHasher hasher, IUserRepository users)
++    public LoginHandler(
++        IPasswordHasher hasher,
++        IUserRepository users,
++        IAccountLockoutStore lockouts,
++        IAuditLog audit)
+     {
+         _hasher = hasher;
+         _users = users;
++        _lockouts = lockouts;
++        _audit = audit;
+     }
+
+-    public async Task<LoginResult> HandleAsync(string accountId, string password)
++    public async Task<LoginResult> HandleAsync(
++        string accountId,
++        string password,
++        CancellationToken ct = default)
+     {
++        var lockedUntil = await _lockouts.GetLockoutUntilAsync(accountId, ct);
++        if (lockedUntil is { } until && until > DateTimeOffset.UtcNow)
++            return LoginResult.Locked(until);
++
+         var user = await _users.FindAsync(accountId);
+         if (user is null) return LoginResult.Unauthorized();
+
+         if (!_hasher.Verify(password, user.PasswordHash))
++        {
++            var failures = await _lockouts.IncrementFailureAsync(accountId, FailureWindow, ct);
++            if (failures >= MaxFailedAttempts)
++            {
++                await _lockouts.LockAsync(accountId, LockoutPeriod, ct);
++                await _audit.WriteAsync(new AccountLockedOutEvent(accountId, DateTimeOffset.UtcNow), ct);
++                return LoginResult.Locked(DateTimeOffset.UtcNow + LockoutPeriod);
++            }
+             return LoginResult.Unauthorized();
++        }
+
++        await _lockouts.ResetAsync(accountId, ct);
+         return LoginResult.Success(user);
+     }
+ }
+diff --git a/src/Auth/LoginResult.cs b/src/Auth/LoginResult.cs
+index 9876543..1234567 100644
+--- a/src/Auth/LoginResult.cs
++++ b/src/Auth/LoginResult.cs
+@@ -1,11 +1,15 @@
++using System;
++
+ namespace Halyard.Auth;
+
+ public sealed record LoginResult(LoginOutcome Outcome, User? User, DateTimeOffset? LockedUntil)
+ {
+     public static LoginResult Success(User u) => new(LoginOutcome.Success, u, null);
+     public static LoginResult Unauthorized() => new(LoginOutcome.Unauthorized, null, null);
++    public static LoginResult Locked(DateTimeOffset until) => new(LoginOutcome.Locked, null, until);
+ }
+
+ public enum LoginOutcome
+ {
+     Success,
+     Unauthorized,
++    Locked,
+ }
+diff --git a/src/Audit/AccountLockedOutEvent.cs b/src/Audit/AccountLockedOutEvent.cs
+new file mode 100644
+index 0000000..2c3d4e5
+--- /dev/null
++++ b/src/Audit/AccountLockedOutEvent.cs
+@@ -0,0 +1,7 @@
++using System;
++
++namespace Halyard.Audit;
++
++public sealed record AccountLockedOutEvent(string AccountId, DateTimeOffset At) : IAuditEvent
++{
++    public string EventType => "account.locked_out";
++}
+diff --git a/tests/Auth/LoginHandlerTests.cs b/tests/Auth/LoginHandlerTests.cs
+index abcdef1..bcdef23 100644
+--- a/tests/Auth/LoginHandlerTests.cs
++++ b/tests/Auth/LoginHandlerTests.cs
+@@ -45,4 +45,28 @@ public class LoginHandlerTests
+         var result = await sut.HandleAsync("u-1", "wrong");
+         Assert.Equal(LoginOutcome.Unauthorized, result.Outcome);
+     }
++
++    [Fact]
++    public async Task HandleLockout_AfterFiveConsecutiveFailures_LocksTheAccount()
++    {
++        var sut = BuildSut(out var lockouts, out var audit);
++        for (int i = 0; i < 5; i++)
++            await sut.HandleAsync("u-1", "wrong");
++
++        var result = await sut.HandleAsync("u-1", "wrong");
++
++        Assert.Equal(LoginOutcome.Locked, result.Outcome);
++        Assert.Single(audit.Written, e => e is AccountLockedOutEvent);
++        Assert.NotNull(result.LockedUntil);
++    }
++
++    [Fact]
++    public async Task HandleLockout_SuccessfulLoginResetsCounter()
++    {
++        var sut = BuildSut(out var lockouts, out _);
++        await sut.HandleAsync("u-1", "wrong");
++        await sut.HandleAsync("u-1", "wrong");
++        await sut.HandleAsync("u-1", "correct-password");
++
++        Assert.Equal(0, await lockouts.PeekFailuresAsync("u-1"));
++    }
+ }

@@ -111,6 +111,31 @@ downloads. If you hit a 401/429, set `HF_TOKEN=<your token>`.
 | [`07-how-to/HandleCancellation`](07-how-to/HandleCancellation/) | Four scenarios: timeout, user cancel, linked tokens, and the happy path. |
 | [`07-how-to/LoggingIntegration`](07-how-to/LoggingIntegration/) | Wire `Microsoft.Extensions.Logging.ILogger` — console, minimal file provider, ASP.NET / Serilog pointers. |
 
+### 08 — Solutions (end-to-end recipes)
+
+Ten end-to-end recipes for real problems — drafting replies, triaging
+feedback, redacting PII, reviewing code, writing SQL from plain-English
+questions, and more. See [`08-solutions/README.md`](08-solutions/) for the
+full catalogue and design themes.
+
+| Folder                                                                            | Use case |
+| --------------------------------------------------------------------------------- | -------- |
+| [`08-solutions/01-EmailReplyAssistant`](08-solutions/01-EmailReplyAssistant/)     | Draft a polished reply from incoming email + intent. |
+| [`08-solutions/02-MeetingNotesToActions`](08-solutions/02-MeetingNotesToActions/) | Extract action items from meeting transcripts. |
+| [`08-solutions/03-ContractClauseAnalyzer`](08-solutions/03-ContractClauseAnalyzer/) | Flag risky contract clauses with severity + rationale. |
+| [`08-solutions/04-PIIRedactor`](08-solutions/04-PIIRedactor/)                     | Scrub PII with deterministic, auditable output. |
+| [`08-solutions/05-InvoiceToJson`](08-solutions/05-InvoiceToJson/)                 | Receipt/invoice text → structured expense JSON. |
+| [`08-solutions/06-CustomerFeedbackTriage`](08-solutions/06-CustomerFeedbackTriage/) | Classify CSV feedback batches with rollup. |
+| [`08-solutions/07-CodeReviewCompanion`](08-solutions/07-CodeReviewCompanion/)     | Pre-pass a `git diff` for security / logic / testing concerns. |
+| [`08-solutions/08-CommitMessageGenerator`](08-solutions/08-CommitMessageGenerator/) | `git diff --staged` → Conventional Commits message. |
+| [`08-solutions/09-SqlFromNaturalLanguage`](08-solutions/09-SqlFromNaturalLanguage/) | Plain-language question + schema → SQL for 6 dialects. |
+| [`08-solutions/10-OfflineKnowledgeBaseQA`](08-solutions/10-OfflineKnowledgeBaseQA/) | Q&A over a folder of `.md` docs with inline citations. |
+
+Whereas sections 01–07 teach **how the SDK works** (one knob at a time),
+section 08 collects **end-to-end recipes for real problems** — small
+runnable solutions to everyday developer tasks. More recipes land here as
+they're implemented.
+
 ---
 
 ## Running a tutorial

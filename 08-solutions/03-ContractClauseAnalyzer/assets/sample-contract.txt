@@ -1,0 +1,64 @@
+SOFTWARE SERVICES AGREEMENT
+
+This Software Services Agreement ("Agreement") is entered into as of
+1 May 2026 between Halyard Systems Ltd. ("Provider") and Northbeam
+Industries B.V. ("Client").
+
+Section 1.1 Services. Provider shall furnish the development,
+hosting, and support services described in Schedule A.
+
+Section 1.2 Fees. Client shall pay Provider the fees set forth in
+Schedule B within thirty (30) days of invoice receipt.
+
+Section 4.3 Term and Renewal. The initial term of this Agreement is
+twenty-four (24) months commencing on the Effective Date. This
+Agreement shall automatically renew for successive twenty-four
+(24) month terms unless either party provides written notice of
+non-renewal at least one hundred and twenty (120) days prior to the
+end of the then-current term.
+
+Section 6.2 Exclusivity. During the term of this Agreement and for
+a period of twenty-four (24) months thereafter, Client shall not
+engage any third party to develop, host, or support software
+solutions that compete with or substantially duplicate the
+functionality of the Services delivered hereunder.
+
+Section 8.2 Indemnification. Provider shall indemnify, defend, and
+hold harmless Client and its affiliates, directors, officers,
+employees, and agents from and against any and all damages, losses,
+liabilities, judgments, costs, and expenses (including reasonable
+attorneys' fees) arising out of or relating to Provider's
+performance of the Services, without cap or limitation of any kind.
+
+Section 9.4 Intellectual Property Assignment. Client hereby assigns
+to Provider all right, title, and interest, including all
+copyrights, patents, and trade secrets, in and to any and all
+inventions, improvements, derivative works, and feedback conceived,
+developed, or contributed by Client or its personnel during the
+course of this engagement, whether or not arising from the use of
+the Services.
+
+Section 11.1 Confidentiality. Each party shall maintain the
+confidentiality of the other party's Confidential Information for a
+period of ten (10) years following termination or expiration of
+this Agreement.
+
+Section 14.2 Non-Compete. For a period of thirty-six (36) months
+following termination of this Agreement, Client shall not, directly
+or indirectly, solicit, hire, or engage any employee or contractor
+of Provider who was involved in delivering the Services, anywhere in
+the European Union.
+
+Section 17.4 Governing Law. This Agreement shall be governed by and
+construed in accordance with the laws of the British Virgin Islands,
+without regard to conflict-of-laws principles.
+
+Section 18.1 Dispute Resolution. Any dispute arising out of or
+relating to this Agreement shall be finally resolved by binding
+arbitration administered in Tortola, British Virgin Islands, in
+English, with each party bearing its own costs and attorneys' fees
+regardless of outcome.
+
+Section 20.5 Entire Agreement. This Agreement, including all
+schedules, constitutes the entire agreement between the parties and
+supersedes all prior negotiations.

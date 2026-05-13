@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Aspose.LLM.Tutorials.CommitMessageGenerator</RootNamespace>
+    <AssemblyName>CommitMessageGenerator</AssemblyName>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.LLM" Version="$(AsposeLLMVersion)" />
+    <ProjectReference Include="..\..\_shared\Aspose.LLM.Tutorials.Common\Aspose.LLM.Tutorials.Common.csproj" />
+  </ItemGroup>
+
+  <!-- Ship the bundled sample diff next to the built executable so `dotnet run`
+       works out of the box even when nothing is piped on stdin. -->
+  <ItemGroup>
+    <None Update="assets\sample.patch">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

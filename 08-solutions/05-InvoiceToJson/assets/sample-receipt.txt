@@ -1,0 +1,36 @@
+==========================================
+       COFFEE & CODE
+   12 Karl Marx Avenue, Novosibirsk
+       VAT ID: 7701234567
+==========================================
+
+Receipt   R-2026-0478
+Date:     2026-03-14
+Time:     08:42
+Cashier:  Olga K.
+
+------------------------------------------
+ITEM                  QTY  PRICE    TOTAL
+------------------------------------------
+Flat white 250ml       2  280.00   560.00
+Almond croissant       l  180.00   180.00
+Espresso doppio        1  140.00   140.00
+Chocolate brownie      1  220.00   220.00
+Sparkling water 0.5L   1   90.00    90.00
+------------------------------------------
+
+  Subtotal       |                 1190.00
+  VAT 20% (incl.)                   198.33
+  Tip                                 0.00
+  -----                              -----
+  TOTAL                            1190.00
+
+  Payment:    VISA ************4242
+  Auth code:  029481
+  Approved.
+
+==========================================
+   Thank you for visiting Coffee & Code!
+   Free Wi-Fi: COFFEEnCODE / 1qaz2wsx
+   www.coffeeandcode.example
+==========================================
