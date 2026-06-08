@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Aspose.LLM.Tutorials.DirectoryBatchProcessing</RootNamespace>
+    <AssemblyName>DirectoryBatchProcessing</AssemblyName>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.LLM" Version="$(AsposeLLMVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <ProjectReference Include="..\..\_shared\Aspose.LLM.Tutorials.Common\Aspose.LLM.Tutorials.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="assets\**\*.*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

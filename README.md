@@ -42,8 +42,8 @@ used. Sizes:
 | `Qwen25Preset` (SDK default)  | Qwen 2.5 7B Instruct Q4_K_M | ~4.5 GB |
 | `Qwen3Preset`                 | Qwen 3 8B Q4_K_M          | ~4.9 GB |
 
-Downloads are cached to the OS temp directory by default; override with
-`ASPOSE_LLM_MODEL_CACHE=/some/path`.
+Downloads are cached to `%LocalAppData%/Aspose.LLM/models` by default;
+override with `ASPOSE_LLM_MODEL_CACHE=/some/path`.
 
 The pilot tutorials all use `SmallModelPreset` so the first run completes in
 minutes, not hours, on a typical network.
@@ -92,6 +92,7 @@ downloads. If you hit a 401/429, set `HF_TOKEN=<your token>`.
 | Folder                                                  | What it shows                                                |
 | ------------------------------------------------------- | ------------------------------------------------------------ |
 | [`05-tuning/BatchProcessing`](05-tuning/BatchProcessing/) | Classify N inputs through one loaded model, fresh session per item, timing summary. |
+| [`05-tuning/DirectoryBatchProcessing`](05-tuning/DirectoryBatchProcessing/) | Process a fixed sample batch of images with one loaded vision model, one reused chat session, optional explicit cleanup, and memory / VRAM telemetry. |
 | [`05-tuning/LongContext`](05-tuning/LongContext/)       | Raise `ContextSize` to 16 k, ingest a 2 000-token doc once, ask several questions against it. |
 | [`05-tuning/LowMemory`](05-tuning/LowMemory/)           | Back-to-back RSS comparison — smaller context + Q8 KV cache shrinks process footprint. |
 
