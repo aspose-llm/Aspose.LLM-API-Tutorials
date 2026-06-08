@@ -1,5 +1,0 @@
-Project Atlas is a six-week effort to consolidate three internal reporting
-tools into one web portal. Product wants a single sign-on flow, shared report
-templates, and a weekly PDF digest for leadership. The largest delivery risk
-is that the analytics schema is still changing, so the team will freeze the
-export contract by the end of week two.

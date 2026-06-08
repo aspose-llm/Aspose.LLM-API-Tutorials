@@ -92,7 +92,7 @@ downloads. If you hit a 401/429, set `HF_TOKEN=<your token>`.
 | Folder                                                  | What it shows                                                |
 | ------------------------------------------------------- | ------------------------------------------------------------ |
 | [`05-tuning/BatchProcessing`](05-tuning/BatchProcessing/) | Classify N inputs through one loaded model, fresh session per item, timing summary. |
-| [`05-tuning/DirectoryBatchProcessing`](05-tuning/DirectoryBatchProcessing/) | Process a fixed sample batch of independent text files or images with one loaded model, fixed context, periodic cleanup, and memory / VRAM telemetry. |
+| [`05-tuning/DirectoryBatchProcessing`](05-tuning/DirectoryBatchProcessing/) | Process a fixed sample batch of images with one loaded vision model, one reused chat session, optional explicit cleanup, and memory / VRAM telemetry. |
 | [`05-tuning/LongContext`](05-tuning/LongContext/)       | Raise `ContextSize` to 16 k, ingest a 2 000-token doc once, ask several questions against it. |
 | [`05-tuning/LowMemory`](05-tuning/LowMemory/)           | Back-to-back RSS comparison — smaller context + Q8 KV cache shrinks process footprint. |
 

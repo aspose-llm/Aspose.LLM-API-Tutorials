@@ -1,5 +1,0 @@
-Service incident on 2026-04-03 affected the checkout API for 17 minutes.
-The root cause was a stale feature flag cache on two gateway nodes after a
-partial rollback. Operations disabled the new experiment, flushed the cache,
-and traffic recovered immediately. The action item is to add cache-version
-checks to the deployment pipeline before the next release.
