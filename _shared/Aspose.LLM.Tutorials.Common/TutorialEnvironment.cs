@@ -14,7 +14,13 @@ public static class TutorialEnvironment
     public const string LicenseEnvVar = "ASPOSE_LLM_LICENSE";
     public const string ModelCacheEnvVar = "ASPOSE_LLM_MODEL_CACHE";
     public const string DefaultLicenseFileName = "License.lic";
-    private const string DefaultModelCacheSubdir = "Aspose.LLM\\models";
+    private static readonly string DefaultModelCacheSubdir = Path.Combine("Aspose.LLM", "models");
+    private static readonly StringComparer PathComparer = OperatingSystem.IsWindows()
+        ? StringComparer.OrdinalIgnoreCase
+        : StringComparer.Ordinal;
+    private static readonly StringComparison PathComparison = OperatingSystem.IsWindows()
+        ? StringComparison.OrdinalIgnoreCase
+        : StringComparison.Ordinal;
 
     /// <summary>
     /// Loads the Aspose.LLM licence from either the <c>ASPOSE_LLM_LICENSE</c>
@@ -184,7 +190,7 @@ public static class TutorialEnvironment
 
     private static IEnumerable<string> EnumerateKnownModelCacheRoots()
     {
-        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var seen = new HashSet<string>(PathComparer);
 
         var primaryCache = ResolveModelCachePath();
         if (seen.Add(primaryCache))
@@ -211,5 +217,5 @@ public static class TutorialEnvironment
         string.Equals(
             Path.GetFullPath(left).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar),
             Path.GetFullPath(right).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar),
-            StringComparison.OrdinalIgnoreCase);
+            PathComparison);
 }
