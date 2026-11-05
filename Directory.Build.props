@@ -2,16 +2,16 @@
 
   <!--
     Shared build settings for every tutorial project in this repo.
-    - Target .NET 8.0 (LTS). The Aspose.LLM SDK itself ships as netstandard2.0
-      and is fully usable from net8.0; net6.0 and net7.0 would also work but we
-      pick a single TFM to keep tutorials terse.
+    - Target .NET 8.0 (LTS) by default. Set TutorialTargetFramework to validate
+      the same examples on another supported runtime. The SDK ships as netstandard2.0.
     - C# latest so examples can use file-scoped namespaces, top-level statements,
       and collection expressions without ceremony.
     - ImplicitUsings brings in the common BCL namespaces; Program.cs stays short.
   -->
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TutorialTargetFramework Condition="'$(TutorialTargetFramework)' == ''">net8.0</TutorialTargetFramework>
+    <TargetFramework>$(TutorialTargetFramework)</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -25,17 +25,16 @@
     or by replacing the PackageReference outright.
   -->
   <PropertyGroup>
-    <AsposeLLMVersion Condition="'$(AsposeLLMVersion)' == ''">26.3.0</AsposeLLMVersion>
+    <AsposeLLMVersion Condition="'$(AsposeLLMVersion)' == ''">26.11.0</AsposeLLMVersion>
   </PropertyGroup>
 
   <!--
-    Aspose.LLM 26.3.0 hard-binds System.Text.Json 9.0.0.0 internally, but its
-    nuspec only declares >= 8.0.0. On net8.0 NuGet picks 8.x by default, which
-    then fails at runtime with FileNotFoundException. Force 9.0.x here so the
-    tutorials just work. Remove once the SDK's nuspec pins the correct minimum.
+    Keep System.Text.Json 9.0.0 explicit on .NET 8/9 for the SDK's dependency.
+    On .NET 10 the direct reference is redundant and triggers NU1510; the SDK
+    package still declares its own transitive dependency.
   -->
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="9.0.0" />
+    <PackageReference Include="System.Text.Json" Version="9.0.0" Condition="'$(TutorialTargetFramework)' != 'net10.0'" />
   </ItemGroup>
 
 </Project>

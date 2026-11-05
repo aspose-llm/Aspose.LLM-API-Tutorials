@@ -1,7 +1,6 @@
 using Aspose.LLM;
 using Aspose.LLM.Abstractions.Acceleration;
 using Aspose.LLM.Abstractions.Models;
-using Aspose.LLM.Abstractions.Parameters.Presets;
 using Aspose.LLM.Tutorials.Common;
 
 // -----------------------------------------------------------------------------
@@ -43,9 +42,7 @@ TutorialEnvironment.ApplyLicense();
 // Use a 7B+ preset here — there's no point in GPU-offloading a 0.5B model
 // (it already fits in every cache). Qwen 2.5 7B is a sensible default.
 // If you'd rather stay on the small preset, swap it in.
-var preset = new Qwen25Preset();
-preset.EngineParameters.ModelCachePath = TutorialEnvironment.ResolveModelCachePath();
-preset.EngineParameters.EnableDebugLogging = false;
+var preset = TutorialEnvironment.CreateQwen25Preset();
 preset.ChatParameters.MaxTokens = 150;
 preset.ChatParameters.SystemPrompt =
     "You are a concise assistant. Keep replies to two or three sentences.";
@@ -72,7 +69,7 @@ preset.BaseModelInferenceParameters.GpuLayers = -1;
 preset.BaseModelInferenceParameters.MainGpu = 0;
 
 // 4. Multi-GPU split (comment in if you have 2+ GPUs).
-// preset.BaseModelInferenceParameters.SplitMode = LlamaSplitMode.LLAMA_SPLIT_MODE_LAYER;
+// preset.BaseModelInferenceParameters.SplitMode = LlmSplitMode.LLM_SPLIT_MODE_LAYER;
 // preset.BaseModelInferenceParameters.TensorSplit = new[] { 0.6f, 0.4f };
 
 // 5. Flash Attention and KQV-offload pay off dramatically on CUDA.
@@ -86,8 +83,7 @@ Console.WriteLine($"  GpuLayers:             {preset.BaseModelInferenceParameter
 Console.WriteLine($"  MainGpu:               {preset.BaseModelInferenceParameters.MainGpu}");
 Console.WriteLine($"  FlashAttention:        {preset.ContextParameters.FlashAttention}");
 Console.WriteLine($"  OffloadKqv:            {preset.ContextParameters.OffloadKqv}");
-Console.WriteLine($"  Model:                 {preset.BaseModelSourceParameters.HuggingFaceRepoId}/" +
-                  $"{preset.BaseModelSourceParameters.HuggingFaceFileName}");
+Console.WriteLine($"  Model:                 {DescribeSource(preset.BaseModelSourceParameters)}");
 Console.WriteLine();
 
 ConsoleHelpers.Info(
@@ -105,3 +101,8 @@ ConsoleHelpers.Info(
     "\nCheck the llama.cpp load-time messages above for confirmation of " +
     "GPU usage (look for 'CUDA', 'offloading N layers to GPU', and " +
     "per-device VRAM accounting).");
+
+static string DescribeSource(dynamic source) =>
+    !string.IsNullOrWhiteSpace((string?)source.ModelFilePath)
+        ? source.ModelFilePath
+        : $"{source.HuggingFaceRepoId}/{source.HuggingFaceFileName}";

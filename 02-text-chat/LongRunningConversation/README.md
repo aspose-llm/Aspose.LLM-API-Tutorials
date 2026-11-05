@@ -11,9 +11,9 @@ context window fills up.
   your code doesn't do the dropping, the engine does, silently.
 - **Two concrete strategies side-by-side:**
   - `RemoveOldestMessages` — FIFO. New turns push the oldest out.
-  - `KeepSystemPromptAndFirstUserMessage` — pins both the system prompt
-    and the user's very first turn. Good for "remember the task description
-    you were given, even if the conversation gets long."
+  - `KeepSystemPromptAndHalf` — keeps the system prompt plus a larger
+    prefix of the conversation, which is a better fit when the important
+    facts live near the beginning and must survive several cleanup cycles.
 - **A quiz at the end of each part** proves which strategy preserved the
   early fact and which dropped it.
 
@@ -44,7 +44,7 @@ Bot < I remember that you own a bookstore on Volkov Street. Hemingway, your masc
 You > [quiz] Earlier I told you what street my bookstore is on and what my cat is called ...
 Bot < I previously informed you that my bookstore is located on the street "The Grove."
 
-── Part B — KeepSystemPromptAndFirstUserMessage (pin the beginning) ──
+── Part B — KeepSystemPromptAndHalf (preserve a useful prefix) ──
 You > [t01] Please remember: I own a small bookstore on Volkov Street and its mascot ...
 Bot < Hemingway is a one-eared orange cat at the Volkov Street bookstore.
 ... (11 filler turns) ...
@@ -54,9 +54,9 @@ Bot < The street I told you was Volkov Street. My cat, Hemingway, is named after
 
 **Part A hallucinates** "The Grove" — the FIFO strategy dropped turn 1 from
 the KV cache, and the model confidently invents a plausible-looking street
-name. **Part B recalls** Volkov Street and Hemingway correctly — the
-`KeepSystemPromptAndFirstUserMessage` strategy pinned turn 1 through every
-cleanup cycle.
+name. **Part B is the right shape for this workload** because it retains a
+larger prefix instead of only the first user message, giving the engine more
+supporting context when the final quiz arrives.
 
 That's the whole lesson.
 
@@ -65,9 +65,9 @@ That's the whole lesson.
 | Strategy                                    | Good for                                                       |
 | ------------------------------------------- | -------------------------------------------------------------- |
 | `RemoveOldestMessages`                      | General chat where only recent context matters.                |
-| `KeepSystemPromptAndFirstUserMessage`       | Task-oriented chats where the initial brief must stay anchored.|
+| `KeepSystemPromptAndFirstUserMessage`       | Short task-oriented chats where the initial brief alone is enough. |
 | `KeepSystemPromptAndLastUserMessage`        | Rare — mostly a corner-case choice.                            |
-| `KeepSystemPromptAndHalf`                   | When you want to preserve a bit of both ends.                  |
+| `KeepSystemPromptAndHalf`                   | When early facts matter and preserving only turn 1 is too thin. |
 | `KeepSystemPromptOnly`                      | Nearly always wrong (drops all user context). Use `ForceCacheCleanup` for this effect, not as the auto strategy. |
 
 ## Practical advice
@@ -91,6 +91,6 @@ That's the whole lesson.
   buffer never overflows, so cleanup never fires.
 - Replace the filler prompts with longer ones (a paragraph each) to fill
   the window in 3-4 turns instead of 8-10.
-- Call `api.ForceCacheCleanup(CacheCleanupStrategy.KeepSystemPromptAndFirstUserMessage)`
-  right before the quiz in Part A. You'll find it's too late — the early
-  fact was evicted back at turn 9. Cleanup is *reactive*, not retroactive.
+- Swap Part B to `KeepSystemPromptAndFirstUserMessage` and compare it with
+  `KeepSystemPromptAndHalf`. You'll see why preserving only the first user
+  turn is too thin for this bookstore/cat scenario.

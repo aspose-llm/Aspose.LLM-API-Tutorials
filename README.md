@@ -13,8 +13,10 @@ example demonstrates, how to run it, and what output to expect.
 
 ### 1. .NET 8 SDK
 
-All tutorials target `net8.0`. Install the .NET 8 SDK from
-<https://dotnet.microsoft.com/download>.
+Tutorials target `net8.0` by default. Install the .NET 8 SDK from
+<https://dotnet.microsoft.com/download>. For .NET 10 validation, set
+`TutorialTargetFramework=net10.0` when restoring and building the solution;
+the clean private NuGet validation procedure below automates this.
 
 ### 2. An Aspose.LLM licence
 
@@ -154,14 +156,18 @@ cache. Subsequent runs reuse both and start in seconds.
 
 ## Package source
 
-The tutorials reference the official `Aspose.LLM` NuGet package via a pinned
-`<AsposeLLMVersion>` property in `Directory.Build.props`. If your environment
-needs an internal feed, add it to `nuget.config` at the repo root.
+The tutorials pin `Aspose.LLM` 26.11.0 in `Directory.Build.props`. Restore
+this version from your configured NuGet feed. If it is not published there
+yet, add the `Aspose.LLM.26.11.0.nupkg` build artifact to a local or
+internal feed and configure NuGet to use that feed for `Aspose.LLM`.
+Other dependencies can continue to come from nuget.org.
 
-To build against a local checkout of the SDK instead (useful for SDK
-developers), replace the `PackageReference` in a project with a
-`ProjectReference` pointing at
-`../../../aspose.ai.llm/Aspose.LLM/Aspose.LLM.csproj`.
+If your `NuGet.Config` uses package source mapping, map `Aspose.LLM`
+to the feed containing 26.11.0. Do not mix 26.11.0 source references
+with the 26.6.0 package: the `LlmSplitMode` API differs.
+
+For a fresh installation test using the signed package from the matching
+GitLab pipeline, follow [clean private NuGet validation](docs/clean-private-nuget-validation.md).
 
 ---
 

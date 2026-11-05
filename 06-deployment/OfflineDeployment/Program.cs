@@ -1,5 +1,4 @@
 using Aspose.LLM;
-using Aspose.LLM.Abstractions.Parameters.Presets;
 using Aspose.LLM.Tutorials.Common;
 
 // -----------------------------------------------------------------------------

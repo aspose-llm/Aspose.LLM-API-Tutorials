@@ -53,7 +53,7 @@ similar) and load the CPU runtime instead. The configuration is still
 Uncomment the multi-GPU block in `Program.cs`:
 
 ```csharp
-preset.BaseModelInferenceParameters.SplitMode = LlamaSplitMode.LLAMA_SPLIT_MODE_LAYER;
+preset.BaseModelInferenceParameters.SplitMode = LlmSplitMode.LLM_SPLIT_MODE_LAYER;
 preset.BaseModelInferenceParameters.TensorSplit = new[] { 0.6f, 0.4f };
 ```
 
@@ -63,11 +63,11 @@ split of `{0.6f, 0.4f}` on a pair puts 60% of the weights on GPU 0 and
 
 `SplitMode` options:
 
-- `LLAMA_SPLIT_MODE_LAYER` — partition by layers (default, best for
+- `LLM_SPLIT_MODE_LAYER` — partition by layers (default, best for
   most models).
-- `LLAMA_SPLIT_MODE_ROW` — partition attention rows (niche, higher
+- `LLM_SPLIT_MODE_ROW` — partition attention rows (niche, higher
   memory pressure on one GPU).
-- `LLAMA_SPLIT_MODE_NONE` — don't split; ignore TensorSplit. Use when
+- `LLM_SPLIT_MODE_NONE` — don't split; ignore TensorSplit. Use when
   you want `MainGpu` to own everything.
 
 ## Partial offload (low-VRAM fallback)

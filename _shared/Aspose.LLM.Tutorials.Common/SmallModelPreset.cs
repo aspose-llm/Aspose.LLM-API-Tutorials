@@ -23,8 +23,11 @@ public sealed class SmallModelPreset : PresetCoreBase
         BaseModelSourceParameters.HuggingFaceRepoId = "QuantFactory/Qwen2-0.5B-Instruct-GGUF";
         BaseModelSourceParameters.HuggingFaceFileName = "Qwen2-0.5B-Instruct.Q4_K_M.gguf";
 
-        EngineParameters.ModelCachePath = TutorialEnvironment.ResolveModelCachePath();
+        TutorialEnvironment.PreferManagedCache(this);
         EngineParameters.EnableDebugLogging = false;
+        TutorialEnvironment.PreferLocalModelFile(
+            BaseModelSourceParameters,
+            TutorialEnvironment.ResolveSmallModelFilePath());
 
         // Keep the footprint modest. 4k context is enough for every pilot
         // tutorial; bump it yourself for longer conversations.
@@ -39,7 +42,7 @@ public sealed class SmallModelPreset : PresetCoreBase
         BaseModelInferenceParameters.GpuLayers = 0;
         BaseModelInferenceParameters.UseMemoryMapping = true;
         BaseModelInferenceParameters.UseMemoryLocking = false;
-        BaseModelInferenceParameters.SplitMode = LlamaSplitMode.LLAMA_SPLIT_MODE_LAYER;
+        BaseModelInferenceParameters.SplitMode = LlmSplitMode.LLM_SPLIT_MODE_LAYER;
 
         ChatParameters.MaxTokens = 256;
         ChatParameters.SystemPrompt = "You are a concise, helpful assistant. Reply in a single short paragraph unless asked otherwise.";

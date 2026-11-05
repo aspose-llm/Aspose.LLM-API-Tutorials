@@ -64,9 +64,7 @@ return 0;
 
 static Gemma3VisionPreset BuildPreset()
 {
-    var preset = new Gemma3VisionPreset();
-    preset.EngineParameters.ModelCachePath = TutorialEnvironment.ResolveModelCachePath();
-    preset.EngineParameters.EnableDebugLogging = false;
+    var preset = TutorialEnvironment.CreateGemma3VisionPreset();
     preset.ContextParameters.ContextSize = ImageContextSize;
     preset.ChatParameters.MaxTokens = 120;
     preset.ChatParameters.SystemPrompt =

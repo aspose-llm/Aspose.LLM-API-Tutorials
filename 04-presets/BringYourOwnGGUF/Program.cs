@@ -62,7 +62,7 @@ preset.ContextParameters.NThreadsBatch = Math.Max(1, Environment.ProcessorCount 
 //    or to a specific integer if you have a supported GPU.
 preset.BaseModelInferenceParameters.GpuLayers = 0;
 preset.BaseModelInferenceParameters.UseMemoryMapping = true;
-preset.BaseModelInferenceParameters.SplitMode = LlamaSplitMode.LLAMA_SPLIT_MODE_LAYER;
+preset.BaseModelInferenceParameters.SplitMode = LlmSplitMode.LLM_SPLIT_MODE_LAYER;
 
 // 4. Chat defaults. The chat template baked into the GGUF metadata is
 //    applied automatically — you don't normally override it here. Just

@@ -14,8 +14,8 @@ using Aspose.LLM.Tutorials.Common;
 // fires after ~8-10 turns instead of ~30, and runs two scripted loops to
 // compare two cleanup strategies head-to-head:
 //
-//   Part A — RemoveOldestMessages:     classic FIFO ring buffer.
-//   Part B — KeepSystemPromptAndFirstUserMessage: preserves the first turn.
+//   Part A — RemoveOldestMessages: classic FIFO ring buffer.
+//   Part B — KeepSystemPromptAndHalf: keeps the prompt and a useful prefix.
 //
 // At the end, each session is quizzed about an early fact and a late fact.
 // The difference in recall tells you which strategy suits which workload.
@@ -35,13 +35,14 @@ await RunPart(
 
 // --- Part B -----------------------------------------------------------------
 await RunPart(
-    "B — KeepSystemPromptAndFirstUserMessage (pin the beginning)",
+    "B — KeepSystemPromptAndHalf (preserve a useful prefix)",
     api,
-    CacheCleanupStrategy.KeepSystemPromptAndFirstUserMessage);
+    CacheCleanupStrategy.KeepSystemPromptAndHalf);
 
 ConsoleHelpers.Info(
-    "\nSame loop, two strategies. The pin-the-beginning strategy survives the " +
-    "early-fact quiz; the FIFO strategy drops it after the buffer rolls over.");
+    "\nSame loop, two strategies. FIFO drops the earliest fact once the buffer " +
+    "rolls over; keeping the prompt plus a larger prefix is the more suitable " +
+    "choice for this scenario.");
 
 // ---------------------------------------------------------------------------
 
@@ -52,8 +53,9 @@ static async Task RunPart(string title, AsposeLLMApi api, CacheCleanupStrategy s
     var preset = NewPreset(strategy);
     var sid = await api.StartNewChatAsync(preset);
 
-    // Turn 1 — establish a concrete, memorable fact. With the pin-the-first
-    // strategy, this turn will survive every cleanup. With FIFO, it won't.
+    // Turn 1 — establish a concrete, memorable fact. FIFO will eventually
+    // evict it; the prefix-preserving strategy has a better chance to retain
+    // enough early context for the final quiz.
     const string earlyFact =
         "Please remember: I own a small bookstore on Volkov Street and its mascot is a one-eared orange cat named Hemingway.";
     ConsoleHelpers.UserLine($"[t01] {earlyFact}");

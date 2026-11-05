@@ -20,8 +20,7 @@ TutorialEnvironment.ApplyLicense();
 
 var preset = new SmallModelPreset();
 ConsoleHelpers.Info(
-    $"Model: {preset.BaseModelSourceParameters.HuggingFaceRepoId}/" +
-    $"{preset.BaseModelSourceParameters.HuggingFaceFileName}");
+    $"Model: {DescribeSource(preset.BaseModelSourceParameters)}");
 ConsoleHelpers.Info($"Cache: {preset.EngineParameters.ModelCachePath}");
 
 // Only one AsposeLLMApi instance may exist per process; `using` disposes the
@@ -33,3 +32,8 @@ ConsoleHelpers.UserLine(question);
 
 var reply = await api.SendMessageAsync(question);
 ConsoleHelpers.AssistantLine(reply);
+
+static string DescribeSource(dynamic source) =>
+    !string.IsNullOrWhiteSpace((string?)source.ModelFilePath)
+        ? source.ModelFilePath
+        : $"{source.HuggingFaceRepoId}/{source.HuggingFaceFileName}";

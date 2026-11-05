@@ -1,5 +1,4 @@
 using Aspose.LLM;
-using Aspose.LLM.Abstractions.Parameters.Presets;
 using Aspose.LLM.Tutorials.Common;
 
 // -----------------------------------------------------------------------------
@@ -38,19 +37,15 @@ ConsoleHelpers.Info($"Image: {imagePath} ({imageBytes.Length:N0} bytes)");
 // Gemma 3 Vision Latex — the same preset used by the SDK's own smoke tests.
 // It wires up both HuggingFace URLs (base model + mmproj) so the first run
 // downloads everything automatically.
-var preset = new Gemma3VisionPreset();
-preset.EngineParameters.ModelCachePath = TutorialEnvironment.ResolveModelCachePath();
-preset.EngineParameters.EnableDebugLogging = false;
+var preset = TutorialEnvironment.CreateGemma3VisionPreset();
 preset.ChatParameters.MaxTokens = 150;
 preset.ChatParameters.SystemPrompt =
     "You are a helpful vision assistant. Describe images concretely and concisely.";
 
 ConsoleHelpers.Info(
-    $"Model: {preset.BaseModelSourceParameters.HuggingFaceRepoId}/" +
-    $"{preset.BaseModelSourceParameters.HuggingFaceFileName}");
+    $"Model: {DescribeSource(preset.BaseModelSourceParameters)}");
 ConsoleHelpers.Info(
-    $"Projector: {preset.MmprojSourceParameters.HuggingFaceRepoId}/" +
-    $"{preset.MmprojSourceParameters.HuggingFaceFileName}");
+    $"Projector: {DescribeSource(preset.MmprojSourceParameters)}");
 ConsoleHelpers.Info($"Cache: {preset.EngineParameters.ModelCachePath}");
 
 using var api = new AsposeLLMApi(preset);
@@ -65,3 +60,8 @@ var reply = await api.SendMessageAsync(question, media: new[] { imageBytes });
 ConsoleHelpers.AssistantLine(reply);
 
 return 0;
+
+static string DescribeSource(dynamic source) =>
+    !string.IsNullOrWhiteSpace((string?)source.ModelFilePath)
+        ? source.ModelFilePath
+        : $"{source.HuggingFaceRepoId}/{source.HuggingFaceFileName}";
