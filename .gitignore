@@ -22,3 +22,19 @@ License.lic
 # OS cruft
 .DS_Store
 Thumbs.db
+.env
+.env.*
+
+# Developer-specific package sources and launch profiles
+NuGet.Config
+nuget.config
+**/Properties/launchSettings.json
+
+# Signing material
+*.pfx
+*.p12
+*.snk
+*.key
+*.pem
+*.nupkg
+*.msi
